@@ -28,4 +28,22 @@ public class BarrelCreator implements ObjectCreator {
 
         System.out.println("Бочка добавлена: " + barrel);
     }
+    @Override
+    public void createObjectFromString(String fields){
+        String[] parts = fields.trim().toLowerCase().split("\\s+");
+        int volume = -1;
+        try {
+            volume = Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format for barrel (volume): " + volume);
+        }
+        String storedMaterial = parts[2];
+        String material = parts[3];
+        Barrel barrel = new Barrel.BarrelBuilder()
+                .setVolume(volume)
+                .setStoredMaterial(storedMaterial)
+                .setMaterial(material)
+                .build();
+        System.out.println("Бочка из файла добавлена: " + barrel);
+    }
 }

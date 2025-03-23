@@ -6,6 +6,9 @@ import com.finalproject.creator.BarrelCreator;
 import com.finalproject.creator.HumanCreator;
 import com.finalproject.service.Input;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -26,6 +29,7 @@ public class Main {
                     Выберите действие:
                     1 - Ввести объекты вручную
                     2 - Выйти
+                    3 - Ввести объекты из файла
                     """);
 
                 String choice = input.getValidStringInput();
@@ -34,11 +38,14 @@ public class Main {
                     case "1":
                         createObjectsManually();
                         break;
+                    case "3":
+                        createObjectsFromFile();
+                        break;
                     case "2":
                         System.out.println("Пока-пока...");
                         return;
                     default:
-                        System.out.println("Не надо так! Введите число от 1 до 2.");
+                        System.out.println("Не надо так! Введите число от 1 до 3.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -67,5 +74,36 @@ public class Main {
             default:
                 System.out.println("Некорректный ввод!");
         }
+    }
+    private static void createObjectsFromFile() throws IOException {
+        System.out.println("Введите полный путь к файлу. Наполнение файла должно иметь следующий вид: \n" +
+                "Имя объекта Поле1 Поле2 Поле3.\n" +
+                "Последовательность полей для классов: \n" +
+                "Животное Вид Цвет глаз Шерст \n" +
+                "Бочка Объем Хранимый материал Материал изготовления \n" +
+                "Человек Пол Возраст Фамилия");
+        //String filePath = input.getValidStringInput();
+        String filePath = "C:/Games/test.txt";// Для теста
+        try (Stream<String> linesStream = Files.lines(Paths.get(filePath))) {
+            String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
+
+            for (String line : linesArray){
+                String className = line.trim().toLowerCase().split("\\s+")[0];
+                switch (className) {
+                    case "животное":
+                        animalCreator.createObjectFromString(line);
+                        break;
+                    case "бочка":
+                        barrelCreator.createObjectFromString(line);
+                        break;
+                    case "человек":
+                        personCreator.createObjectFromString(line);
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
