@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
+import java.nio.file.InvalidPathException;
 
 public class Main {
 
@@ -101,9 +102,13 @@ public class Main {
                         break;
                 }
             }
+        } catch (InvalidPathException e) {
+            // Обработка неправильного пути
+            System.err.println("Ошибка: Неправильный путь к файлу: " + filePath);
         } catch (IOException e) {
-            e.printStackTrace();
+            // Обработка ошибок ввода-вывода
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+        }
         }
 
     }
-}
