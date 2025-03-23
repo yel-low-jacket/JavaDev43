@@ -82,8 +82,8 @@ public class Main {
                 "Животное Вид Цвет глаз Шерст \n" +
                 "Бочка Объем Хранимый материал Материал изготовления \n" +
                 "Человек Пол Возраст Фамилия");
-        //String filePath = input.getValidStringInput();
-        String filePath = "C:/Games/test.txt";// Для теста
+        String filePath = input.getValidStringInput();
+        //String filePath = "C:/Games/test.txt";// Для теста
         try (Stream<String> linesStream = Files.lines(Paths.get(filePath))) {
             String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
 
