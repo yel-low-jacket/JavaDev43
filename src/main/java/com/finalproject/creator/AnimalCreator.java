@@ -2,6 +2,7 @@ package com.finalproject.creator;
 
 import com.finalproject.model.Animal;
 import com.finalproject.service.Input;
+import com.finalproject.tracker.ObjectTracker;
 
 public class AnimalCreator implements ObjectCreator {
     private final Input input;
@@ -26,7 +27,7 @@ public class AnimalCreator implements ObjectCreator {
                 .setEyeColor(eyeColor)
                 .setHasFur(hasFur)
                 .build();
-
+        ObjectTracker.addObject(animal);  // Track
         System.out.println("Животное добавлено: " + animal);
     }
     @Override

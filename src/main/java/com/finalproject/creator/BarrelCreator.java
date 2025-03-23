@@ -1,6 +1,7 @@
 package com.finalproject.creator;
 import com.finalproject.model.Barrel;
 import com.finalproject.service.Input;
+import com.finalproject.tracker.ObjectTracker;
 
 public class BarrelCreator implements ObjectCreator {
     private final Input input;
@@ -25,7 +26,7 @@ public class BarrelCreator implements ObjectCreator {
                 .setStoredMaterial(storedMaterial)
                 .setMaterial(material)
                 .build();
-
+        ObjectTracker.addObject(barrel);  // Track
         System.out.println("Бочка добавлена: " + barrel);
     }
     @Override

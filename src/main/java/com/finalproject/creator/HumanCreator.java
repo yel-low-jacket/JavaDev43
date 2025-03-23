@@ -1,6 +1,7 @@
 package com.finalproject.creator;
 import com.finalproject.model.Human;
 import com.finalproject.service.Input;
+import com.finalproject.tracker.ObjectTracker;
 
 public class HumanCreator implements ObjectCreator {
     private final Input input;
@@ -25,6 +26,7 @@ public class HumanCreator implements ObjectCreator {
                 .setAge(age)
                 .setSurname(surname)
                 .build();
+        ObjectTracker.addObject(human);  // Track
 
         System.out.println("Человек добавлен: " + human);
     }
