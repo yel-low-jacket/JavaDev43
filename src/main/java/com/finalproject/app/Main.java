@@ -23,14 +23,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try {
-            input = new Input();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         input = new Input();
 
         animalCreator = new AnimalCreator(input);
