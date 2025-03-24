@@ -7,6 +7,9 @@ import com.finalproject.creator.HumanCreator;
 import com.finalproject.service.Input;
 import java.io.IOException;
 
+import java.net.URISyntaxException;
+
+
 public class Main {
 
     private static ObjectCreator animalCreator;
@@ -15,7 +18,17 @@ public class Main {
     private static Input input;
 
     public static void main(String[] args) {
+
+        try {
+            input = new Input();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         input = new Input();
+
         animalCreator = new AnimalCreator(input);
         barrelCreator = new BarrelCreator(input);
         personCreator = new HumanCreator(input);
@@ -25,7 +38,11 @@ public class Main {
                 System.out.println("""
                     Выберите действие:
                     1 - Ввести объекты вручную
-                    2 - Выйти
+
+                    2 - Импортировать объекты из файла
+                    3 - Рандомный ввод объектов
+                    4 - Выйти
+ 
                     """);
 
                 String choice = input.getValidStringInput();
@@ -35,6 +52,9 @@ public class Main {
                         createObjectsManually();
                         break;
                     case "2":
+                        System.out.println("Введите путь к файлу\n");
+                    case "3": break;
+                    case "4":
                         System.out.println("Пока-пока...");
                         return;
                     default:
