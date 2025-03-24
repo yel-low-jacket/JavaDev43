@@ -2,6 +2,7 @@ package com.finalproject.customarraylist;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 
 public class CustomArrayList<T> {
@@ -21,6 +22,9 @@ public class CustomArrayList<T> {
             throw new IllegalArgumentException("Capacity is wrong: " + capacity);
         }
         this.array = (T[]) new Object[capacity];
+    }
+
+    public <T> CustomArrayList(List<T> ts) {
     }
 
 
