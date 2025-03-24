@@ -29,4 +29,30 @@ public class AnimalCreator implements ObjectCreator {
 
         System.out.println("Животное добавлено: " + animal);
     }
+    @Override
+    public void createObjectFromString(String fields){
+        String[] parts = fields.trim().toLowerCase().split("\\s+");
+        String species = parts[1];
+        String eyeColor = parts[2];
+        boolean hasFur = false;
+        try{
+            if (parts[3].equals("true") || parts[3].equals("да")) {
+                hasFur = true;
+            }
+             else {
+                throw new IllegalArgumentException("Invalid boolean format for animal (hasFur): " + hasFur);
+            }
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Error parsing bool for animal: " + e.getMessage());
+        }
+
+        Animal animal = new Animal.AnimalBuilder()
+                .setSpecies(species)
+                .setEyeColor(eyeColor)
+                .setHasFur(hasFur)
+                .build();
+        System.out.println("Животное из файла добавлено: " + animal);
+
+    }
 }

@@ -28,5 +28,23 @@ public class HumanCreator implements ObjectCreator {
 
         System.out.println("Человек добавлен: " + human);
     }
+    @Override
+    public void createObjectFromString(String fields){
+        String[] parts = fields.trim().toLowerCase().split("\\s+");
+        String gender = parts[1];
+        int age = -1;
+        try {
+            age = Integer.parseInt(parts[2]);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format for human (age): " + age);
+        }
+        String surname = parts[3];
+        Human human = new Human.HumanBuilder()
+                .setGender(gender)
+                .setAge(age)
+                .setSurname(surname)
+                .build();
+        System.out.println("Человек из файла добавлен: " + human);
+    }
 }
 
