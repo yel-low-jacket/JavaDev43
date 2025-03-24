@@ -1,10 +1,12 @@
 package com.finalproject.TimSort;
+import com.finalproject.customarraylist.CustomArrayList;
+
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 public class TimSort {
+
 
     // Минимальный размер подмассива (run)
     private static final int MIN_MERGE = 32;
@@ -63,8 +65,8 @@ public class TimSort {
         int len2 = right - mid;
 
         // Временные массивы
-        List<T> leftArr = new ArrayList<>(arr.subList(left, mid + 1));
-        List<T> rightArr = new ArrayList<>(arr.subList(mid + 1, right + 1));
+        CustomArrayList<T> leftArr = new CustomArrayList<>(arr.subList(left, mid + 1));
+        CustomArrayList<T> rightArr = new CustomArrayList<>(arr.subList(mid + 1, right + 1));
 
         int i = 0, j = 0, k = left;
 
@@ -85,67 +87,4 @@ public class TimSort {
             arr.set(k++, rightArr.get(j++));
         }
     }
-    /// //////////////////////
-    // НОВЫЙ МЕТОД: Сортировка Timsort только для чётных значений поля
-    public static <T> void sortEvenNumbersWithTimsort(List<T> list, String numberFieldName) {
-        if (list == null || list.isEmpty()) {
-            System.out.println("Список пуст");
-            return;
-        }
-
-        try {
-            Field field = list.get(0).getClass().getDeclaredField(numberFieldName);
-            field.setAccessible(true);
-
-            if (!isNumericType(field.getType())) {
-                System.out.println("Поле '" + numberFieldName + "' не является числовым");
-                return;
-            }
-
-            // Создаем список для сортировки (только чётные элементы)
-            List<SortItem<T>> itemsToSort = new ArrayList<>();
-            List<Integer> originalIndices = new ArrayList<>();
-
-            for (int i = 0; i < list.size(); i++) {
-                T item = list.get(i);
-                long value = getFieldValue(field, item);
-                if (value % 2 == 0) {
-                    itemsToSort.add(new SortItem<>(item, i, value));
-                    originalIndices.add(i);
-                }
-            }
-
-            // Сортируем с помощью Timsort
-            timSort(itemsToSort, Comparator.comparingLong(SortItem::getValue));
-
-            // Обновляем исходный список
-            for (int i = 0; i < itemsToSort.size(); i++) {
-                list.set(originalIndices.get(i), itemsToSort.get(i).element);
-            }
-
-        } catch (NoSuchFieldException e) {
-            System.out.println("Поле '" + numberFieldName + "' не найдено в классе " +
-                    list.get(0).getClass().getSimpleName());
-        } catch (IllegalAccessException e) {
-            System.out.println("Нет доступа к полю '" + numberFieldName + "'");
-        }
-    }
-    // Проверка что тип поля числовой
-    private static boolean isNumericType(Class<?> type) {
-        return Number.class.isAssignableFrom(type) ||
-                type.isPrimitive() && (
-                        type == int.class || type == long.class ||
-                                type == double.class || type == float.class ||
-                                type == short.class || type == byte.class
-                );
-    }
-
-    // Получение числового значения поля
-    private static <T> long getFieldValue(Field field, T obj) throws IllegalAccessException {
-        if (field.getType() == int.class) return field.getInt(obj);
-        if (field.getType() == long.class) return field.getLong(obj);
-        if (field.getType() == double.class) return (long)field.getDouble(obj);
-        return ((Number)field.get(obj)).longValue();
-    }
-    /// ////////////////////////
 }
