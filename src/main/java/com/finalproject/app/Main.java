@@ -11,6 +11,9 @@ import java.nio.file.Paths;
 import java.util.stream.Stream;
 import java.nio.file.InvalidPathException;
 
+import java.net.URISyntaxException;
+
+
 public class Main {
 
     private static ObjectCreator animalCreator;
@@ -19,7 +22,17 @@ public class Main {
     private static Input input;
 
     public static void main(String[] args) {
+
+        try {
+            input = new Input();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         input = new Input();
+
         animalCreator = new AnimalCreator(input);
         barrelCreator = new BarrelCreator(input);
         personCreator = new HumanCreator(input);
@@ -29,8 +42,9 @@ public class Main {
                 System.out.println("""
                     Выберите действие:
                     1 - Ввести объекты вручную
-                    2 - Выйти
-                    3 - Ввести объекты из файла
+                    2 - Импортировать объекты из файла
+                    3 - Рандомный ввод объектов
+                    4 - Выйти
                     """);
 
                 String choice = input.getValidStringInput();
@@ -39,14 +53,16 @@ public class Main {
                     case "1":
                         createObjectsManually();
                         break;
-                    case "3":
+                    case "2":
                         createObjectsFromFile();
                         break;
-                    case "2":
+                
+                    case "3": break;
+                    case "4":
                         System.out.println("Пока-пока...");
                         return;
                     default:
-                        System.out.println("Не надо так! Введите число от 1 до 3.");
+                        System.out.println("Не надо так! Введите число от 1 до 4.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -84,7 +100,7 @@ public class Main {
                 "Бочка Объем Хранимый материал Материал изготовления \n" +
                 "Человек Пол Возраст Фамилия");
         String filePath = input.getValidStringInput();
-        //String filePath = "C:/Games/test.txt";// Для теста
+
         try (Stream<String> linesStream = Files.lines(Paths.get(filePath))) {
             String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
 
