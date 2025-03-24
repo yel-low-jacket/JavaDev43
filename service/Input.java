@@ -10,7 +10,6 @@ public class Input {
     public String getValidStringInput() {
         try {
             return reader.readLine();
-
         } catch (IOException e) {
             e.printStackTrace();
             return "";
@@ -20,9 +19,7 @@ public class Input {
     public int getValidIntInput() {
         while (true) {
             try {
-
                 String input = reader.readLine();
-
                 return Integer.parseInt(input);
             } catch (IOException | NumberFormatException e) {
                 System.out.println("Не надо так! Введите число.");
