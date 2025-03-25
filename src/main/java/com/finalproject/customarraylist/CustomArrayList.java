@@ -1,7 +1,5 @@
 package com.finalproject.customarraylist;
 
-import com.finalproject.creator.AnimalRandomCreator;
-import com.finalproject.model.Animal;
 
 import java.util.*;
 import java.util.function.UnaryOperator;
