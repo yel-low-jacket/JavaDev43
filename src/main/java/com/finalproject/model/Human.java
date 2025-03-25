@@ -1,4 +1,5 @@
 package com.finalproject.model;
+import java.util.Comparator;
 
 public class Human {
     private final String gender;
@@ -36,6 +37,11 @@ public class Human {
         }
     }
 
+    public static Comparator<Human> getComparator() {
+        return Comparator.comparing((Human h) -> h.gender)
+                .thenComparingInt(h -> h.age)
+                .thenComparing(h -> h.surname);
+    }
     @Override
     public String toString() {
         return String.format("Человек { Пол: %s, Возраст: %d, Фамилия: %s }",

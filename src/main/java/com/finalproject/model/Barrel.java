@@ -1,4 +1,5 @@
 package com.finalproject.model;
+import java.util.Comparator;
 
 public class Barrel {
     private final int volume;
@@ -34,6 +35,12 @@ public class Barrel {
         public Barrel build() {
             return new Barrel(this);
         }
+    }
+
+    public static Comparator<Barrel> getComparator() {
+        return Comparator.comparingInt((Barrel b) -> b.volume)
+                .thenComparing(b -> b.storedMaterial)
+                .thenComparing(b -> b.material);
     }
 
     @Override
