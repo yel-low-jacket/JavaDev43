@@ -40,7 +40,7 @@ public class Human {
     public static Comparator<Human> getComparator() {
         return Comparator.comparing((Human h) -> h.gender)
                 .thenComparingInt(h -> h.age)
-                .thenComparing(h -> h.lastName);
+                .thenComparing(h -> h.surname);
     }
     @Override
     public String toString() {
