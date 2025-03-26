@@ -40,10 +40,9 @@ public class Main {
                     1 - Ввести объекты вручную
                     2 - Импортировать объекты из файла
                     3 - Создать случайные объекты
-                    4 - Просмотреть массив объектов
-                    5 - Вывести отсортированные массив объектов
-                    6 - Бинарный поиск
-                    7 - Выйти
+                    4 - Вывести отсортированные массив объектов  
+                    5 - Бинарный поиск
+                    6 - Выйти
                     """);
 
                 String choice = input.getValidStringInput();
@@ -60,10 +59,9 @@ public class Main {
                         break;
                     case "4":
                         System.out.println(ObjectTracker.getCreatedObjects());
-                        break;
+                        break;//тут еще пропишем куда выводить
                     case "5": break;
-                    case "6": break;
-                    case "7":
+                    case "6":
                         System.out.println("Пока-пока...");
                         return;
                     default:
