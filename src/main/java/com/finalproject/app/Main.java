@@ -138,13 +138,35 @@ public class Main {
         }
         }
         private static void createRandomObjects() throws IOException{
-            System.out.println("Введите количество рандомно добавляемых объектов во все таблицы");
+            System.out.println("Выберите тип объекта для рандомного создания:");
+            System.out.println("1 - Животное");
+            System.out.println("2 - Бочка");
+            System.out.println("3 - Человек");
+            String choice = input.getValidStringInput();
+            System.out.println("Введите количество рандомно добавляемых объектов");
             int amount = input.getValidIntInput();
-            while (amount > 0) {
-                animalCreator.createRandomObject();
-                barrelCreator.createRandomObject();
-                personCreator.createRandomObject();
-                amount--;
+
+            switch (choice) {
+                case "1":
+                    while (amount > 0) {
+                        animalCreator.createRandomObject();
+                        amount--;
+                    }
+                    break;
+                case "2":
+                    while (amount > 0) {
+                        barrelCreator.createRandomObject();
+                        amount--;
+                    }
+                    break;
+                case "3":
+                    while (amount > 0) {
+                        personCreator.createRandomObject();
+                        amount--;
+                    }
+                    break;
+                default:
+                    System.out.println("Некорректный ввод!");
             }
             System.out.println("Случайные объекты созданы.\n");
         }
