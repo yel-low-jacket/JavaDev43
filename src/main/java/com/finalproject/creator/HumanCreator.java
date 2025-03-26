@@ -1,11 +1,10 @@
 package com.finalproject.creator;
-import com.finalproject.model.Animal;
 import com.finalproject.model.Human;
 import com.finalproject.service.Input;
 import com.finalproject.tracker.ObjectTracker;
 
 
-public class HumanCreator implements ObjectCreator {
+public class HumanCreator implements ObjectCreator<Human> {
     private final Input input;
 
     public HumanCreator(Input input) {
@@ -13,7 +12,7 @@ public class HumanCreator implements ObjectCreator {
     }
 
     @Override
-    public void createObject() {
+    public Human createObject() {
         System.out.println("Введите пол человека:");
         String gender = input.getValidStringInput();
 
@@ -28,9 +27,11 @@ public class HumanCreator implements ObjectCreator {
                 .setAge(age)
                 .setSurname(surname)
                 .build();
-        ObjectTracker.addHuman(human);  // Track
-
-        System.out.println("Человек добавлен: " + human);
+        if (input.getMode().equals("createNew")) {
+            ObjectTracker.addHuman(human);  // Track
+            System.out.println("Человек добавлен: " + human);
+        }
+        return human;
     }
     @Override
     public void createObjectFromString(String fields){
@@ -50,10 +51,10 @@ public class HumanCreator implements ObjectCreator {
                 .build();
         ObjectTracker.addHuman(human);  // Track
     }
-    public void createRandomObject(){
+    public Human createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
         Human human = creator.createRandomHuman();
         ObjectTracker.addHuman(human);  // Track
+        return human;
     }
 }
-

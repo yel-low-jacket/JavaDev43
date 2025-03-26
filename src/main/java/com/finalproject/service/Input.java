@@ -5,26 +5,51 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class Input {
+    private static String mode;
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public String getValidStringInput() {
-        try {
-            return reader.readLine();
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+    public String getMode() {
+        return this.mode;
+    }
+    private String getInput() {
+        while(true){
+            try {
+                String val = reader.readLine().trim();
+                if (val.isEmpty()){
+                    System.out.println("Введено пустое значение, попробуйте ещё раз!");
+                    continue;
+                }
+                return val;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Произошла ошибка, попробуйте ещё раз!");
+            }
         }
+
+    }
+
+    public String getValidStringInput() {
+        while(true){
+            String val = getInput();
+            if (!val.matches("[a-zA-Zа-яА-ЯёЁ ]+")){
+                System.out.println("Введена строка с числами. Введите строку без чисел!");
+                continue;
+            }
+            return val;
+        }
+
     }
 
     public int getValidIntInput() {
         while (true) {
             try {
-
-                String input = reader.readLine();
-
+                String input = getInput();
                 return Integer.parseInt(input);
-            } catch (IOException | NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Не надо так! Введите число.");
             }
         }
@@ -32,14 +57,14 @@ public class Input {
 
     public boolean getBooleanInput() {
         while (true) {
-            try {
-                String input = reader.readLine().trim().toLowerCase();
-                if (input.equals("да")) return true;
-                if (input.equals("нет")) return false;
-                System.out.println("Не надо так! Введите 'да' или 'нет'.");
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
+            String input = getInput().toLowerCase();
+            switch (input) {
+                case "да":
+                    return true;
+                case "нет":
+                    return false;
+                default:
+                    System.out.println("Не надо так! Введите 'да' или 'нет'.");
             }
         }
     }

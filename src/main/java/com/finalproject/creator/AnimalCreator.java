@@ -5,15 +5,15 @@ import com.finalproject.model.Animal;
 import com.finalproject.service.Input;
 import com.finalproject.tracker.ObjectTracker;
 
-public class AnimalCreator implements ObjectCreator {
+public class AnimalCreator implements ObjectCreator<Animal> {
     private final Input input;
 
     public AnimalCreator(Input input) {
-        this.input = input;  // сохраняем зависимость
+        this.input = input;
     }
 
     @Override
-    public void createObject() {
+    public Animal createObject() {
         System.out.println("Введите вид животного:");
         String species = input.getValidStringInput();
 
@@ -28,8 +28,11 @@ public class AnimalCreator implements ObjectCreator {
                 .setEyeColor(eyeColor)
                 .setHasFur(hasFur)
                 .build();
-        ObjectTracker.addAnimal(animal);  // Track
-        System.out.println("Животное добавлено: " + animal);
+        if (input.getMode().equals("createNew")){
+            ObjectTracker.addAnimal(animal);  // Track
+            System.out.println("Животное добавлено: " + animal);
+        }
+        return animal;
     }
     @Override
     public void createObjectFromString(String fields){
@@ -41,7 +44,7 @@ public class AnimalCreator implements ObjectCreator {
             if (parts[3].equals("true") || parts[3].equals("да")) {
                 hasFur = true;
             }
-             else {
+            else {
                 throw new IllegalArgumentException("Invalid boolean format for animal (hasFur): " + hasFur);
             }
         }
@@ -56,10 +59,10 @@ public class AnimalCreator implements ObjectCreator {
                 .build();
         ObjectTracker.addAnimal(animal);  // Track
     }
-    public void createRandomObject(){
+    public Animal createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
         Animal animal = creator.createRandomAnimal();
         ObjectTracker.addAnimal(animal);  // Track
-
+        return animal;
     }
 }

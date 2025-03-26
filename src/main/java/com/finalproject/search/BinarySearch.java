@@ -1,11 +1,10 @@
 package com.finalproject.search;
-
-import com.finalproject.customarraylist.CustomArrayList;
+import java.util.List;
 import java.util.Comparator;
 
 public class BinarySearch {
 
-    public static <T> int binarySearch(CustomArrayList<T> list, T valueToFind, Comparator<T> comparator) {
+    public static <T> int binarySearch(List<T> list, T valueToFind, Comparator<T> comparator) {
         int left = 0, right = list.size() - 1;
 
         while (left <= right) {

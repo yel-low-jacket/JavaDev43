@@ -1,30 +1,29 @@
 package com.finalproject.app;
 
-import com.finalproject.model.Barrel;
-import com.finalproject.model.Human;
 import com.finalproject.tracker.ObjectTracker;
 import com.finalproject.creator.ObjectCreator;
 import com.finalproject.creator.AnimalCreator;
 import com.finalproject.creator.BarrelCreator;
 import com.finalproject.creator.HumanCreator;
+import com.finalproject.search.BinarySearch;
+import com.finalproject.model.Human;
+import com.finalproject.model.Barrel;
+import com.finalproject.model.Animal;
 import com.finalproject.service.Input;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.stream.Stream;
 import java.nio.file.InvalidPathException;
-import com.finalproject.TimSort.TimSort;
-import java.util.Arrays;
 import java.util.Comparator;
-
-import java.net.URISyntaxException;
 
 
 public class Main {
 
     private static ObjectCreator animalCreator;
     private static ObjectCreator barrelCreator;
-    private static ObjectCreator personCreator;
+    private static ObjectCreator humanCreator;
     private static Input input;
 
     public static void main(String[] args) {
@@ -33,7 +32,7 @@ public class Main {
 
         animalCreator = new AnimalCreator(input);
         barrelCreator = new BarrelCreator(input);
-        personCreator = new HumanCreator(input);
+        humanCreator = new HumanCreator(input);
 
         while (true) {
             try {
@@ -48,28 +47,30 @@ public class Main {
                     7 - Выйти
                     """);
 
-                String choice = input.getValidStringInput();
+                int choice = input.getValidIntInput();
 
                 switch (choice) {
-                    case "1":
+                    case 1:
+                        input.setMode("createNew");
                         createObjectsManually();
                         break;
-                    case "2":
+                    case 2:
                         createObjectsFromFile();
                         break;
-                    case "3":
+                    case 3:
                         createRandomObjects();
                         break;
-                    case "4":
+                    case 4:
                         outputAllArrays();
                         break;
-                    case "5":
-
+                    case 5:
+                        input.setMode("find");
+                        binerySearch();
                         break;
-                    case "6":
+                    case 6:
                         outputAllArraysWithAdditionalSort();
                         break;
-                    case "7":
+                    case 7:
                         System.out.println("Пока-пока...");
                         return;
                     default:
@@ -87,27 +88,36 @@ public class Main {
         System.out.println("2 - Бочка");
         System.out.println("3 - Человек");
 
-        String choice = input.getValidStringInput();
+        int choice = input.getValidIntInput();
 
         switch (choice) {
-            case "1":
+            case 1:
                 animalCreator.createObject();
                 break;
-            case "2":
+            case 2:
                 barrelCreator.createObject();
                 break;
-            case "3":
-                personCreator.createObject();
+            case 3:
+                humanCreator.createObject();
                 break;
             default:
                 System.out.println("Некорректный ввод!");
+        }
+    }
+    private static <T> void searchInList(List<T> list, Comparator<T> comparator, T searchObject) {
+        int index = BinarySearch.binarySearch(list, searchObject, comparator);
+
+        if (index != -1) {
+            System.out.println("Объект найден: " + list.get(index));
+        } else {
+            System.out.println("Объект не найден.");
         }
     }
     private static void createObjectsFromFile() throws IOException {
         System.out.println("Введите полный путь к файлу. Наполнение файла должно иметь следующий вид: \n" +
                 "Имя объекта Поле1 Поле2 Поле3.\n" +
                 "Последовательность полей для классов: \n" +
-                "Животное Вид Цвет глаз Шерст \n" +
+                "Животное Вид Цвет глаз Шерсть \n" +
                 "Бочка Объем Хранимый материал Материал изготовления \n" +
                 "Человек Пол Возраст Фамилия");
         String filePath = input.getValidStringInput();
@@ -115,7 +125,7 @@ public class Main {
         try (Stream<String> linesStream = Files.lines(Paths.get(filePath))) {
             String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
 
-            for (String line : linesArray){
+            for (String line : linesArray) {
                 String className = line.trim().toLowerCase().split("\\s+")[0];
                 switch (className) {
                     case "животное":
@@ -125,7 +135,7 @@ public class Main {
                         barrelCreator.createObjectFromString(line);
                         break;
                     case "человек":
-                        personCreator.createObjectFromString(line);
+                        humanCreator.createObjectFromString(line);
                         break;
                 }
             }
@@ -136,40 +146,76 @@ public class Main {
             // Обработка ошибок ввода-вывода
             System.err.println("Ошибка при чтении файла: " + e.getMessage());
         }
-        }
-        private static void createRandomObjects() throws IOException{
-            System.out.println("Выберите тип объекта для рандомного создания:");
-            System.out.println("1 - Животное");
-            System.out.println("2 - Бочка");
-            System.out.println("3 - Человек");
-            String choice = input.getValidStringInput();
-            System.out.println("Введите количество рандомно добавляемых объектов");
-            int amount = input.getValidIntInput();
+    }
 
-            switch (choice) {
-                case "1":
-                    while (amount > 0) {
-                        animalCreator.createRandomObject();
-                        amount--;
-                    }
-                    break;
-                case "2":
-                    while (amount > 0) {
-                        barrelCreator.createRandomObject();
-                        amount--;
-                    }
-                    break;
-                case "3":
-                    while (amount > 0) {
-                        personCreator.createRandomObject();
-                        amount--;
-                    }
-                    break;
-                default:
-                    System.out.println("Некорректный ввод!");
-            }
-            System.out.println("Случайные объекты созданы.\n");
+    private static void createRandomObjects() throws IOException{
+        System.out.println("Выберите тип объекта для рандомного создания:");
+        System.out.println("1 - Животное");
+        System.out.println("2 - Бочка");
+        System.out.println("3 - Человек");
+        int choice = input.getValidIntInput();
+        System.out.println("Введите количество рандомно добавляемых объектов");
+        int amount = input.getValidIntInput();
+
+        switch (choice) {
+            case 1:
+                while (amount > 0) {
+                    animalCreator.createRandomObject();
+                    amount--;
+                }
+                break;
+            case 2:
+                while (amount > 0) {
+                    barrelCreator.createRandomObject();
+                    amount--;
+                }
+                break;
+            case 3:
+                while (amount > 0) {
+                    humanCreator.createRandomObject();
+                    amount--;
+                }
+                break;
+            default:
+                System.out.println("Некорректный ввод!");
         }
+        System.out.println("Случайные объекты созданы.\n");
+    }
+
+    private static void binerySearch() throws IOException {
+        System.out.println("""
+                Выберите класс для поиска:
+                1 - Животное
+                2 - Бочка
+                3 - Человек
+                """);
+
+        int choice = input.getValidIntInput();
+        Object searchObject = null;
+
+        switch (choice) {
+            case 1:
+                Animal animal = (Animal) animalCreator.createObject();
+                searchInList(ObjectTracker.getCreatedAnimals(), Animal.getComparator(), animal);
+                break;
+            case 2:
+                Barrel barrel = (Barrel) barrelCreator.createObject();
+                searchInList(ObjectTracker.getCreatedBarrels(), Barrel.getComparator(), barrel);
+                break;
+            case 3:
+                Human human = (Human) humanCreator.createObject();
+                searchInList(ObjectTracker.getCreatedHumans(), Human.getComparator(), human);
+                break;
+            default:
+                System.out.println("Некорректный ввод! Введите число от 1 до 3");
+                return;
+        }
+
+
+
+
+}
+
 
         private static void outputAllArrays(){
             System.out.println("Животные:");

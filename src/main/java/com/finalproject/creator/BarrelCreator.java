@@ -7,15 +7,15 @@ import com.finalproject.tracker.ObjectTracker;
 import java.util.List;
 import java.util.Random;
 
-public class BarrelCreator implements ObjectCreator {
+public class BarrelCreator implements ObjectCreator<Barrel> {
     private final Input input;
 
     public BarrelCreator(Input input) {
-        this.input = input;  // сохраняем зависимость
+        this.input = input;
     }
 
     @Override
-    public void createObject() {
+    public Barrel createObject() {
         System.out.println("Введите объем бочки (в литрах):");
         int volume = input.getValidIntInput();
 
@@ -30,8 +30,11 @@ public class BarrelCreator implements ObjectCreator {
                 .setStoredMaterial(storedMaterial)
                 .setMaterial(material)
                 .build();
-        ObjectTracker.addBarrel(barrel);  // Track
+        if (input.getMode().equals("createNew")){
+            ObjectTracker.addBarrel(barrel);  // Track
         System.out.println("Бочка добавлена: " + barrel);
+        }
+        return barrel;
     }
     @Override
     public void createObjectFromString(String fields){
@@ -51,9 +54,10 @@ public class BarrelCreator implements ObjectCreator {
                 .build();
         ObjectTracker.addBarrel(barrel);  // Track
     }
-    public void createRandomObject(){
+    public Barrel createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
         Barrel barrel = creator.createRandomBarrel();
         ObjectTracker.addBarrel(barrel); // Track
+        return barrel;
     }
 }
