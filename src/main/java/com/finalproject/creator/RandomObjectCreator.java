@@ -7,12 +7,12 @@ import java.util.Random;
 
 public class RandomObjectCreator {
 
-    private static final String[] ANIMAL_SPECIES = {"Кот", "Собака", "Лев", "Тигр", "Обезьяна"};
-    private static final String[] ANIMAL_EYE_COLORS = {"Синий", "Зеленый", "Желтый", "Карий"};
+    private static final String[] ANIMAL_SPECIES = {"Кошка", "Собака", "Рептилия", "Земноводное", "Рыба"};
+    private static final String[] ANIMAL_EYE_COLORS = {"Синий", "Зеленый", "Желтый", "Карий", "Голубой"};
     private static final String[] BARREL_STORED_MATERIALS = {"Вода", "Пиво", "Мед", "Масло"};
-    private static final String[] BARREL_MATERIALS = {"Дуб", "Сталь", "Пластик"};
-    private static final String[] HUMAN_GENDER = {"Мужской", "Женский"};
-    private static final String[] HUMAN_SURNAMES = {"Сидорович", "Brown", "Hopkins", "Godfrey", "Smith"};
+    private static final String[] BARREL_MATERIALS = {"Дуб", "Сталь", "Пластик", "Сосна", "Золото", "Серебро", "Береза"};
+    private static final String[] HUMAN_GENDER = {"Мужской", "Женский", "Небинарный", "Гендерофлюид вертосексуал", "Не определился"};
+    private static final String[] HUMAN_SURNAMES = {"Brown", "Hopkins", "Godfrey", "Smith","Иванов", "Петров", "Сидоров", "Коваль", "Моль"};
 
     private final Random random;
 

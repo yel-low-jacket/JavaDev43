@@ -52,18 +52,8 @@ public class BarrelCreator implements ObjectCreator {
         ObjectTracker.addObject(barrel);  // Track
     }
     public void createRandomObject(){
-        Random random = new Random();
-        List<String> listMat = List.of("Дуб", "Сосна", "Золото", "Серебро", "Береза");
-        List<String> listStMat = List.of("Вино", "Гвозди", "Гайки", "Вода", "Бурбон");
-        int volume = random.nextInt(100)+1;
-        String storedMaterial = listStMat.get(random.nextInt(listStMat.size()));
-        String material = listMat.get(random.nextInt(listMat.size()));
-
-        Barrel barrel = new Barrel.BarrelBuilder()
-                .setVolume(volume)
-                .setStoredMaterial(storedMaterial)
-                .setMaterial(material)
-                .build();
-        ObjectTracker.addObject(barrel);  // Track
+        RandomObjectCreator creator = new RandomObjectCreator();
+        Barrel barrel = creator.createRandomBarrel();
+        ObjectTracker.addObject(barrel); // Track
     }
 }

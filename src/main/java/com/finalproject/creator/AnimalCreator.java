@@ -57,18 +57,8 @@ public class AnimalCreator implements ObjectCreator {
         ObjectTracker.addObject(animal);  // Track
     }
     public void createRandomObject(){
-        Random random = new Random();
-        List<String> listSpec = List.of("Кошка", "Собака", "Рептилия", "Земноводное", "Рыба");
-        List<String> listEyes = List.of("Карий", "Зеленый", "Голубой", "Красный", "Серый");
-        String species = listSpec.get(random.nextInt(listSpec.size()));
-        String eyeColor = listEyes.get(random.nextInt(listEyes.size()));
-        boolean hasFur = random.nextBoolean();
-
-        Animal animal = new Animal.AnimalBuilder()
-                .setSpecies(species)
-                .setEyeColor(eyeColor)
-                .setHasFur(hasFur)
-                .build();
+        RandomObjectCreator creator = new RandomObjectCreator();
+        Animal animal = creator.createRandomAnimal();
         ObjectTracker.addObject(animal);  // Track
 
     }
