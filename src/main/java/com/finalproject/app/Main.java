@@ -72,20 +72,18 @@ public class Main {
 
                         break;
                     case "6":
-                       // AdditionalSorting.sortWithEvenValues(ObjectTracker.getCreatedHumans(), Human::getAge,(h, newAge) -> new Human.HumanBuilder().setGender(h.getGender()).setAge(newAge).setSurname(h.getSurname()).build());
-                        // AdditionalSorting.sortWithEvenValues(ObjectTracker.getCreatedBarrels(), Barrel::getVolume,(b, newVolume) -> new Barrel.BarrelBuilder().setVolume(newVolume).setStoredMaterial(b.getStoredMaterial()).setMaterial(b.getMaterial()).build());
                         System.out.println("Животные:");
-                        System.out.println("Животные дополнительной сортировке не подлежат");
+                        ObjectTracker.getCreatedAnimalWithSort();
                         System.out.println("Человеки:");
-                        System.out.println(ObjectTracker.getCreatedHumans());
+                        System.out.println(ObjectTracker.getCreatedHumanWithSort());
                         System.out.println("Бочки:");
-                        System.out.println(ObjectTracker.getCreatedBarrels());
+                        System.out.println(ObjectTracker.getCreatedBarrelWithSort());
                         break;
                     case "7":
                         System.out.println("Пока-пока...");
                         return;
                     default:
-                        System.out.println("Не надо так! Введите число от 1 до 6.");
+                        System.out.println("Не надо так! Введите число от 1 до 7.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

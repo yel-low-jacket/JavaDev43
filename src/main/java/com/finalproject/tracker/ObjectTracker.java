@@ -32,4 +32,16 @@ public class ObjectTracker {
     public static List<Human> getCreatedHumans() { return createdHumans; }
     public static List<Barrel> getCreatedBarrels() { return createdBarrels; }
 
+    public static List<Human> getCreatedHumanWithSort() {
+        TimSort.sortEvenNumbersWithTimsort(createdHumans,"age");
+        return createdHumans;
+    }
+    public static void getCreatedAnimalWithSort() {
+        System.out.println("Животные дополнительной сортировке не подлежат");
+    }
+    public static List<Barrel> getCreatedBarrelWithSort() {
+        TimSort.sortEvenNumbersWithTimsort(createdBarrels, "volume");
+        return createdBarrels;
+    }
+
 }
