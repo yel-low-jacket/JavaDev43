@@ -30,7 +30,7 @@ public class BarrelCreator implements ObjectCreator {
                 .setStoredMaterial(storedMaterial)
                 .setMaterial(material)
                 .build();
-        ObjectTracker.addObject(barrel);  // Track
+        ObjectTracker.addBarrel(barrel);  // Track
         System.out.println("Бочка добавлена: " + barrel);
     }
     @Override
@@ -49,11 +49,11 @@ public class BarrelCreator implements ObjectCreator {
                 .setStoredMaterial(storedMaterial)
                 .setMaterial(material)
                 .build();
-        ObjectTracker.addObject(barrel);  // Track
+        ObjectTracker.addBarrel(barrel);  // Track
     }
     public void createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
         Barrel barrel = creator.createRandomBarrel();
-        ObjectTracker.addObject(barrel); // Track
+        ObjectTracker.addBarrel(barrel); // Track
     }
 }

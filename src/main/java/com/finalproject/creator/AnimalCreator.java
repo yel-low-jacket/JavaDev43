@@ -28,7 +28,7 @@ public class AnimalCreator implements ObjectCreator {
                 .setEyeColor(eyeColor)
                 .setHasFur(hasFur)
                 .build();
-        ObjectTracker.addObject(animal);  // Track
+        ObjectTracker.addAnimal(animal);  // Track
         System.out.println("Животное добавлено: " + animal);
     }
     @Override
@@ -54,12 +54,12 @@ public class AnimalCreator implements ObjectCreator {
                 .setEyeColor(eyeColor)
                 .setHasFur(hasFur)
                 .build();
-        ObjectTracker.addObject(animal);  // Track
+        ObjectTracker.addAnimal(animal);  // Track
     }
     public void createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
         Animal animal = creator.createRandomAnimal();
-        ObjectTracker.addObject(animal);  // Track
+        ObjectTracker.addAnimal(animal);  // Track
 
     }
 }

@@ -1,4 +1,5 @@
 package com.finalproject.model;
+
 import java.util.Comparator;
 
 public class Animal {
@@ -11,6 +12,7 @@ public class Animal {
         this.eyeColor = animalBuilder.eyeColor;
         this.hasFur = animalBuilder.hasFur;
     }
+
 
     public static class AnimalBuilder {
         private String species;
@@ -45,7 +47,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return String.format("Животное { Вид: %s, Цвет глаз: %s, Наличие шерсти: %s }",
+        return String.format("Животное { Вид: %s, Цвет глаз: %s, Наличие шерсти: %s }\n",
                 species, eyeColor, hasFur ? "есть" : "нет");
     }
 }

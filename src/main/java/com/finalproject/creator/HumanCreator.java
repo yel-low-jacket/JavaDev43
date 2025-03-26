@@ -28,7 +28,7 @@ public class HumanCreator implements ObjectCreator {
                 .setAge(age)
                 .setSurname(surname)
                 .build();
-        ObjectTracker.addObject(human);  // Track
+        ObjectTracker.addHuman(human);  // Track
 
         System.out.println("Человек добавлен: " + human);
     }
@@ -48,12 +48,12 @@ public class HumanCreator implements ObjectCreator {
                 .setAge(age)
                 .setSurname(surname)
                 .build();
-        ObjectTracker.addObject(human);  // Track
+        ObjectTracker.addHuman(human);  // Track
     }
     public void createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
         Human human = creator.createRandomHuman();
-        ObjectTracker.addObject(human);  // Track
+        ObjectTracker.addHuman(human);  // Track
     }
 }
 

@@ -1,5 +1,7 @@
 package com.finalproject.app;
 
+import com.finalproject.model.Barrel;
+import com.finalproject.model.Human;
 import com.finalproject.tracker.ObjectTracker;
 import com.finalproject.creator.ObjectCreator;
 import com.finalproject.creator.AnimalCreator;
@@ -40,9 +42,10 @@ public class Main {
                     1 - Ввести объекты вручную
                     2 - Импортировать объекты из файла
                     3 - Создать случайные объекты
-                    4 - Вывести отсортированные массив объектов  
+                    4 - Вывести отсортированные массивы объектов
                     5 - Бинарный поиск
-                    6 - Выйти
+                    6 - Дополнительная сортировка
+                    7 - Выйти
                     """);
 
                 String choice = input.getValidStringInput();
@@ -58,14 +61,31 @@ public class Main {
                         createRandomObjects();
                         break;
                     case "4":
-                        System.out.println(ObjectTracker.getCreatedObjects());
+                        System.out.println("Животные:");
+                        System.out.println(ObjectTracker.getCreatedAnimals());
+                        System.out.println("Человеки:");
+                        System.out.println(ObjectTracker.getCreatedHumans());
+                        System.out.println("Бочки:");
+                        System.out.println(ObjectTracker.getCreatedBarrels());
                         break;//тут еще пропишем куда выводить
-                    case "5": break;
+                    case "5":
+
+                        break;
                     case "6":
+                       // AdditionalSorting.sortWithEvenValues(ObjectTracker.getCreatedHumans(), Human::getAge,(h, newAge) -> new Human.HumanBuilder().setGender(h.getGender()).setAge(newAge).setSurname(h.getSurname()).build());
+                        // AdditionalSorting.sortWithEvenValues(ObjectTracker.getCreatedBarrels(), Barrel::getVolume,(b, newVolume) -> new Barrel.BarrelBuilder().setVolume(newVolume).setStoredMaterial(b.getStoredMaterial()).setMaterial(b.getMaterial()).build());
+                        System.out.println("Животные:");
+                        System.out.println("Животные дополнительной сортировке не подлежат");
+                        System.out.println("Человеки:");
+                        System.out.println(ObjectTracker.getCreatedHumans());
+                        System.out.println("Бочки:");
+                        System.out.println(ObjectTracker.getCreatedBarrels());
+                        break;
+                    case "7":
                         System.out.println("Пока-пока...");
                         return;
                     default:
-                        System.out.println("Не надо так! Введите число от 1 до 4.");
+                        System.out.println("Не надо так! Введите число от 1 до 6.");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

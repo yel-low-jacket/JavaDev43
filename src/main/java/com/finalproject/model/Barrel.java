@@ -1,7 +1,9 @@
 package com.finalproject.model;
+
+
 import java.util.Comparator;
 
-public class Barrel {
+public class Barrel{
     private final int volume;
     private final String storedMaterial;
     private final String material;
@@ -45,7 +47,7 @@ public class Barrel {
 
     @Override
     public String toString() {
-        return String.format("Бочка { Объем: %d л, Хранимый материал: %s, Материал бочки: %s }",
+        return String.format("Бочка { Объем: %d л, Хранимый материал: %s, Материал бочки: %s }\n",
                 volume, storedMaterial, material);
     }
 }
