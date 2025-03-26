@@ -1,5 +1,6 @@
 package com.finalproject.app;
 
+import com.finalproject.tracker.ObjectTracker;
 import com.finalproject.creator.ObjectCreator;
 import com.finalproject.creator.AnimalCreator;
 import com.finalproject.creator.BarrelCreator;
@@ -10,6 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 import java.nio.file.InvalidPathException;
+import com.finalproject.TimSort.TimSort;
+import java.util.Arrays;
+import java.util.Comparator;
 
 import java.net.URISyntaxException;
 
@@ -35,8 +39,12 @@ public class Main {
                     Выберите действие:
                     1 - Ввести объекты вручную
                     2 - Импортировать объекты из файла
-                    3 - Рандомный ввод объектов
-                    4 - Выйти
+                    3 - Создать случайные объекты
+                    4 - Просмотреть массив объектов
+                    5 - Отсортировать массив объектов
+                    6 - Вывести отсортированные массив объектов
+                    7 - Бинарный поиск
+                    8 - Выйти
                     """);
 
                 String choice = input.getValidStringInput();
@@ -48,9 +56,16 @@ public class Main {
                     case "2":
                         createObjectsFromFile();
                         break;
-                
-                    case "3": break;
+                    case "3":
+                        createRandomObjects();
+                        break;
                     case "4":
+                        System.out.println(ObjectTracker.getCreatedObjects());
+                        break;
+                    case "5": break;
+                    case "6": break;
+                    case "7": break;
+                    case "8":
                         System.out.println("Пока-пока...");
                         return;
                     default:
@@ -117,6 +132,15 @@ public class Main {
             // Обработка ошибок ввода-вывода
             System.err.println("Ошибка при чтении файла: " + e.getMessage());
         }
+        }
+        private static void createRandomObjects() throws IOException{
+            animalCreator.createRandomObject();
+            barrelCreator.createRandomObject();
+            personCreator.createRandomObject();
+            animalCreator.createRandomObject();
+            barrelCreator.createRandomObject();
+            personCreator.createRandomObject();
+            System.out.println("Случайные объекты созданы.\n");
         }
 
     }

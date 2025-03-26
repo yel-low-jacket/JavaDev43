@@ -3,6 +3,9 @@ import com.finalproject.model.Human;
 import com.finalproject.service.Input;
 import com.finalproject.tracker.ObjectTracker;
 
+import java.util.List;
+import java.util.Random;
+
 public class HumanCreator implements ObjectCreator {
     private final Input input;
 
@@ -46,7 +49,21 @@ public class HumanCreator implements ObjectCreator {
                 .setAge(age)
                 .setSurname(surname)
                 .build();
-        System.out.println("Человек из файла добавлен: " + human);
+        ObjectTracker.addObject(human);  // Track
+    }
+    public void createRandomObject(){
+        Random random = new Random();
+        List<String> listGen = List.of("Мужской", "Женский", "Небинарный", "Гендерофлюид вертосексуал", "Не определился");
+        List<String> listSur = List.of("Иванов", "Петров", "Сидоров", "Коваль", "Моль");
+        String gender = listGen.get(random.nextInt(listGen.size()));
+        int age = random.nextInt(100) +1;
+        String surname = listSur.get(random.nextInt(listSur.size()));
+        Human human = new Human.HumanBuilder()
+                .setGender(gender)
+                .setAge(age)
+                .setSurname(surname)
+                .build();
+        ObjectTracker.addObject(human);  // Track
     }
 }
 

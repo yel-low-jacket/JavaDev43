@@ -1,5 +1,6 @@
 package com.finalproject.creator;
-
+import java.util.List;
+import java.util.Random;
 import com.finalproject.model.Animal;
 import com.finalproject.service.Input;
 import com.finalproject.tracker.ObjectTracker;
@@ -53,7 +54,22 @@ public class AnimalCreator implements ObjectCreator {
                 .setEyeColor(eyeColor)
                 .setHasFur(hasFur)
                 .build();
-        System.out.println("Животное из файла добавлено: " + animal);
+        ObjectTracker.addObject(animal);  // Track
+    }
+    public void createRandomObject(){
+        Random random = new Random();
+        List<String> listSpec = List.of("Кошка", "Собака", "Рептилия", "Земноводное", "Рыба");
+        List<String> listEyes = List.of("Карий", "Зеленый", "Голубой", "Красный", "Серый");
+        String species = listSpec.get(random.nextInt(listSpec.size()));
+        String eyeColor = listEyes.get(random.nextInt(listEyes.size()));
+        boolean hasFur = random.nextBoolean();
+
+        Animal animal = new Animal.AnimalBuilder()
+                .setSpecies(species)
+                .setEyeColor(eyeColor)
+                .setHasFur(hasFur)
+                .build();
+        ObjectTracker.addObject(animal);  // Track
 
     }
 }
