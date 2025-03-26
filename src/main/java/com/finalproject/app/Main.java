@@ -61,23 +61,13 @@ public class Main {
                         createRandomObjects();
                         break;
                     case "4":
-                        System.out.println("Животные:");
-                        System.out.println(ObjectTracker.getCreatedAnimals());
-                        System.out.println("Человеки:");
-                        System.out.println(ObjectTracker.getCreatedHumans());
-                        System.out.println("Бочки:");
-                        System.out.println(ObjectTracker.getCreatedBarrels());
-                        break;//тут еще пропишем куда выводить
+                        outputAllArrays();
+                        break;
                     case "5":
 
                         break;
                     case "6":
-                        System.out.println("Животные:");
-                        ObjectTracker.getCreatedAnimalWithSort();
-                        System.out.println("Человеки:");
-                        System.out.println(ObjectTracker.getCreatedHumanWithSort());
-                        System.out.println("Бочки:");
-                        System.out.println(ObjectTracker.getCreatedBarrelWithSort());
+                        outputAllArraysWithAdditionalSort();
                         break;
                     case "7":
                         System.out.println("Пока-пока...");
@@ -148,13 +138,33 @@ public class Main {
         }
         }
         private static void createRandomObjects() throws IOException{
-            animalCreator.createRandomObject();
-            barrelCreator.createRandomObject();
-            personCreator.createRandomObject();
-            animalCreator.createRandomObject();
-            barrelCreator.createRandomObject();
-            personCreator.createRandomObject();
+            System.out.println("Введите количество рандомно добавляемых объектов во все таблицы");
+            int amount = input.getValidIntInput();
+            while (amount > 0) {
+                animalCreator.createRandomObject();
+                barrelCreator.createRandomObject();
+                personCreator.createRandomObject();
+                amount--;
+            }
             System.out.println("Случайные объекты созданы.\n");
+        }
+
+        private static void outputAllArrays(){
+            System.out.println("Животные:");
+            System.out.println(ObjectTracker.getCreatedAnimals());
+            System.out.println("Человеки:");
+            System.out.println(ObjectTracker.getCreatedHumans());
+            System.out.println("Бочки:");
+            System.out.println(ObjectTracker.getCreatedBarrels());
+        }
+
+        private static void outputAllArraysWithAdditionalSort(){
+            System.out.println("Животные:");
+            ObjectTracker.getCreatedAnimalWithSort();
+            System.out.println("Человеки:");
+            System.out.println(ObjectTracker.getCreatedHumanWithSort());
+            System.out.println("Бочки:");
+            System.out.println(ObjectTracker.getCreatedBarrelWithSort());
         }
 
     }
