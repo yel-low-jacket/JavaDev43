@@ -39,8 +39,12 @@ public class Main {
                     Выберите действие:
                     1 - Ввести объекты вручную
                     2 - Импортировать объекты из файла
-                    3 - Рандомный ввод объектов
-                    4 - Выйти
+                    3 - Создать случайные объекты
+                    4 - Просмотреть массив объектов
+                    5 - Отсортировать массив объектов
+                    6 - Вывести отсортированные массив объектов
+                    7 - Бинарный поиск
+                    8 - Выйти
                     """);
 
                 String choice = input.getValidStringInput();
@@ -56,6 +60,12 @@ public class Main {
                         createRandomObjects();
                         break;
                     case "4":
+                        System.out.println(ObjectTracker.getCreatedObjects());
+                        break;
+                    case "5": break;
+                    case "6": break;
+                    case "7": break;
+                    case "8":
                         System.out.println("Пока-пока...");
                         return;
                     default:
