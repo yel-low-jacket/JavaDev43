@@ -3,6 +3,10 @@ package com.finalproject.service;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Input {
     private static String mode;
@@ -31,7 +35,20 @@ public class Input {
         }
 
     }
-
+    public String getValidFileInput(){
+     while(true){
+         String filePath = getInput();
+         try (Stream<String> linesStream = Files.lines(Paths.get(filePath))) {
+             return filePath;
+     } catch (InvalidPathException e) {
+            // Обработка неправильного пути
+            System.err.println("Ошибка: Неправильный путь к файлу: " + filePath);
+        } catch (IOException e) {
+            // Обработка ошибок ввода-вывода
+            System.err.println("Ошибка при чтении файла: " + e.getMessage());
+        }
+    }
+    }
     public String getValidStringInput() {
         while(true){
             String val = getInput();

@@ -43,16 +43,23 @@ public class BarrelCreator implements ObjectCreator<Barrel> {
         try {
             volume = Integer.parseInt(parts[1]);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid number format for barrel (volume): " + volume);
+            System.out.println("Бочка с объемом: " + volume + "не добавлена.\n" +
+                    "Указанный объем не целочисленное число!\n");
         }
         String storedMaterial = parts[2];
         String material = parts[3];
-        Barrel barrel = new Barrel.BarrelBuilder()
-                .setVolume(volume)
-                .setStoredMaterial(storedMaterial)
-                .setMaterial(material)
-                .build();
-        ObjectTracker.addBarrel(barrel);  // Track
+        if (storedMaterial.matches("[a-zA-Zа-яА-ЯёЁ ]+") && material.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
+            Barrel barrel = new Barrel.BarrelBuilder()
+                    .setVolume(volume)
+                    .setStoredMaterial(storedMaterial)
+                    .setMaterial(material)
+                    .build();
+            ObjectTracker.addBarrel(barrel);  // Track
+        }
+        else{
+            System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
+                    "Объект Бочка: Материала " + material + " Наполненная материалом " + storedMaterial + " не добавлен!");
+        }
     }
     public Barrel createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();

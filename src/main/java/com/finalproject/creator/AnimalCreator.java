@@ -45,19 +45,26 @@ public class AnimalCreator implements ObjectCreator<Animal> {
                 hasFur = true;
             }
             else {
-                throw new IllegalArgumentException("Invalid boolean format for animal (hasFur): " + hasFur);
+                throw new IllegalArgumentException("Животное с данными о наличии шерсти: " + hasFur + " не добавлено.\n" +
+                        "Укажите логическую переменную для данного поля!\n");
             }
         }
         catch (IllegalArgumentException e) {
-            System.out.println("Error parsing bool for animal: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
+        if (species.matches("[a-zA-Zа-яА-ЯёЁ ]+") && eyeColor.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
 
-        Animal animal = new Animal.AnimalBuilder()
-                .setSpecies(species)
-                .setEyeColor(eyeColor)
-                .setHasFur(hasFur)
-                .build();
-        ObjectTracker.addAnimal(animal);  // Track
+            Animal animal = new Animal.AnimalBuilder()
+                    .setSpecies(species)
+                    .setEyeColor(eyeColor)
+                    .setHasFur(hasFur)
+                    .build();
+            ObjectTracker.addAnimal(animal);  // Track
+        }
+        else{
+            System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
+                    "Объект Животное: Вида " + species + " с Цветом глаз " + eyeColor + " не добавлен!");
+        }
     }
     public Animal createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();

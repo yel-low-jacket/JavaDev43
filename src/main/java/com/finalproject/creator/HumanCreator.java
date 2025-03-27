@@ -41,15 +41,23 @@ public class HumanCreator implements ObjectCreator<Human> {
         try {
             age = Integer.parseInt(parts[2]);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid number format for human (age): " + age);
+            System.out.println("Человек возраста: " + age + " не добовлен.\n" +
+                    "Указаный возраст не целочисленное число!\n");
         }
         String surname = parts[3];
-        Human human = new Human.HumanBuilder()
-                .setGender(gender)
-                .setAge(age)
-                .setSurname(surname)
-                .build();
-        ObjectTracker.addHuman(human);  // Track
+        if (gender.matches("[a-zA-Zа-яА-ЯёЁ ]+") && surname.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
+            Human human = new Human.HumanBuilder()
+                    .setGender(gender)
+                    .setAge(age)
+                    .setSurname(surname)
+                    .build();
+            ObjectTracker.addHuman(human);  // Track
+        }
+        else{
+            System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
+                    "Объект Человек: Гендера " + gender + " с Фамилией " + surname + " не добавлен!");
+        }
+
     }
     public Human createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
