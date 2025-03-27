@@ -1,13 +1,11 @@
 package com.finalproject.app;
-
-import com.finalproject.model.Barrel;
-import com.finalproject.model.Human;
 import com.finalproject.tracker.ObjectTracker;
 import com.finalproject.creator.ObjectCreator;
 import com.finalproject.creator.AnimalCreator;
 import com.finalproject.creator.BarrelCreator;
 import com.finalproject.creator.HumanCreator;
 import com.finalproject.search.BinarySearch;
+import com.finalproject.customarraylist.CustomArrayList;
 import com.finalproject.model.Human;
 import com.finalproject.model.Barrel;
 import com.finalproject.model.Animal;
@@ -19,7 +17,6 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.nio.file.InvalidPathException;
 import java.util.Comparator;
-
 
 public class Main {
 
@@ -39,15 +36,15 @@ public class Main {
         while (true) {
             try {
                 System.out.println("""
-                    Выберите действие:
-                    1 - Ввести объекты вручную
-                    2 - Импортировать объекты из файла
-                    3 - Создать случайные объекты
-                    4 - Вывести отсортированные массивы объектов
-                    5 - Бинарный поиск
-                    6 - Дополнительная сортировка
-                    7 - Выйти
-                    """);
+                        Выберите действие:
+                        1 - Ввести объекты вручную
+                        2 - Импортировать объекты из файла
+                        3 - Создать случайные объекты
+                        4 - Вывести отсортированные массивы объектов
+                        5 - Бинарный поиск
+                        6 - Дополнительная сортировка
+                        7 - Выйти
+                        """);
 
                 int choice = input.getValidIntInput();
 
@@ -117,24 +114,24 @@ public class Main {
         String filePath = input.getValidFileInput();
         Stream<String> linesStream = Files.lines(Paths.get(filePath));
         String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
-            for (String line : linesArray) {
-                String className = line.trim().toLowerCase().split("\\s+")[0];
-                switch (className) {
-                    case "животное":
-                        animalCreator.createObjectFromString(line);
-                        break;
-                    case "бочка":
-                        barrelCreator.createObjectFromString(line);
-                        break;
-                    case "человек":
-                        humanCreator.createObjectFromString(line);
-                        break;
-                }
+        for (String line : linesArray) {
+            String className = line.trim().toLowerCase().split("\\s+")[0];
+            switch (className) {
+                case "животное":
+                    animalCreator.createObjectFromString(line);
+                    break;
+                case "бочка":
+                    barrelCreator.createObjectFromString(line);
+                    break;
+                case "человек":
+                    humanCreator.createObjectFromString(line);
+                    break;
             }
-            System.out.println("Объекты из файла созданы!");
+        }
+        System.out.println("Объекты из файла созданы!");
     }
 
-    private static void createRandomObjects() throws IOException{
+    private static void createRandomObjects() throws IOException {
         System.out.println("Выберите тип объекта для рандомного создания:");
         System.out.println("1 - Животное");
         System.out.println("2 - Бочка");
@@ -168,36 +165,8 @@ public class Main {
         System.out.println("Случайные объекты созданы.\n");
     }
 
-    private static void binerySearch() throws IOException {
-        System.out.println("""
-                Выберите класс для поиска:
-                1 - Животное
-                2 - Бочка
-                3 - Человек
-                """);
-
-        int choice = input.getValidIntInput();
-        Object searchObject = null;
-
-        switch (choice) {
-            case 1:
-                Animal animal = (Animal) animalCreator.createObject();
-                searchInList(ObjectTracker.getCreatedAnimals(), Animal.getComparator(), animal);
-                break;
-            case 2:
-                Barrel barrel = (Barrel) barrelCreator.createObject();
-                searchInList(ObjectTracker.getCreatedBarrels(), Barrel.getComparator(), barrel);
-                break;
-            case 3:
-                Human human = (Human) humanCreator.createObject();
-                searchInList(ObjectTracker.getCreatedHumans(), Human.getComparator(), human);
-                break;
-            default:
-                System.out.println("Некорректный ввод! Введите число от 1 до 3");
-                return;
-        }
-    }
-    private static <T> void searchInList(List<T> list, Comparator<T> comparator, T searchObject) {
+    private static <T> void binarySearch(List<T> list, ObjectCreator creator, Comparator<T> comparator) throws IOException {
+        T searchObject = (T) creator.createObject();
         int index = BinarySearch.binarySearch(list, searchObject, comparator);
 
         if (index != -1) {
@@ -207,7 +176,25 @@ public class Main {
         }
     }
 
-    private static void outputAllArrays(){
+    private static void binerySearch() throws IOException {
+        System.out.println("""
+                Выберите класс для поиска:
+                1 - Животное
+                2 - Бочка
+                3 - Человек
+                """);
+
+        int choice = input.getValidIntInput();
+
+        switch (choice) {
+            case 1 -> binarySearch(ObjectTracker.getCreatedAnimals(), animalCreator, Animal.getComparator());
+            case 2 -> binarySearch(ObjectTracker.getCreatedBarrels(), barrelCreator, Barrel.getComparator());
+            case 3 -> binarySearch(ObjectTracker.getCreatedHumans(), humanCreator, Human.getComparator());
+            default -> System.out.println("Некорректный ввод! Введите число от 1 до 3");
+        }
+    }
+
+    private static void outputAllArrays() {
         System.out.println("Животные:");
         System.out.println(ObjectTracker.getCreatedAnimals());
         System.out.println("Человеки:");
@@ -216,7 +203,7 @@ public class Main {
         System.out.println(ObjectTracker.getCreatedBarrels());
     }
 
-    private static void outputAllArraysWithAdditionalSort(){
+    private static void outputAllArraysWithAdditionalSort() {
         System.out.println("Животные:");
         ObjectTracker.getCreatedAnimalWithSort();
         System.out.println("Человеки:");
@@ -224,5 +211,4 @@ public class Main {
         System.out.println("Бочки:");
         System.out.println(ObjectTracker.getCreatedBarrelWithSort());
     }
-
 }
