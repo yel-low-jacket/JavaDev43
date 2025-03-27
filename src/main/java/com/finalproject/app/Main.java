@@ -64,7 +64,7 @@ public class Main {
                         break;
                     case 5:
                         input.setMode("find");
-                        binerySearch();
+                        Search();
                         break;
                     case 6:
                         Output.outputAllArraysWithAdditionalSort();
@@ -176,7 +176,7 @@ public class Main {
         }
     }
 
-    private static void binerySearch() throws IOException {
+    private static void Search() throws IOException {
         System.out.println("""
                 Выберите класс для поиска:
                 1 - Животное
@@ -194,3 +194,4 @@ public class Main {
         }
     }
 }
+
