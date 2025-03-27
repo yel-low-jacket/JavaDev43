@@ -1,5 +1,8 @@
 package com.finalproject.creator;
 
+import com.finalproject.factories.AnimalFactory;
+import com.finalproject.factories.BarrelFactory;
+import com.finalproject.factories.HumanFactory;
 import com.finalproject.model.Animal;
 import com.finalproject.model.Barrel;
 import com.finalproject.model.Human;
@@ -9,7 +12,7 @@ public class RandomObjectCreator {
 
     private static final String[] ANIMAL_SPECIES = {"Кошка", "Собака", "Рептилия", "Земноводное", "Рыба"};
     private static final String[] ANIMAL_EYE_COLORS = {"Синий", "Зеленый", "Желтый", "Карий", "Голубой"};
-    private static final String[] BARREL_STORED_MATERIALS = {"Вода", "Пиво", "Мед", "Масло"};
+    private static final String[] BARREL_STORED_MATERIALS = {"Вода", "Пиво", "Мед", "Масло", "Гвозди", "Гайки", "Материнсике платы"};
     private static final String[] BARREL_MATERIALS = {"Дуб", "Сталь", "Пластик", "Сосна", "Золото", "Серебро", "Береза"};
     private static final String[] HUMAN_GENDER = {"Мужской", "Женский", "Небинарный", "Гендерофлюид вертосексуал", "Не определился"};
     private static final String[] HUMAN_SURNAMES = {"Brown", "Hopkins", "Godfrey", "Smith","Иванов", "Петров", "Сидоров", "Коваль", "Моль"};
@@ -22,29 +25,29 @@ public class RandomObjectCreator {
 
     // Генерация случайного животного
     public Animal createRandomAnimal() {
-        return new Animal.AnimalBuilder()
-                .setSpecies(ANIMAL_SPECIES[random.nextInt(ANIMAL_SPECIES.length)])
-                .setEyeColor(ANIMAL_EYE_COLORS[random.nextInt(ANIMAL_EYE_COLORS.length)])
-                .setHasFur(random.nextBoolean())
-                .build();
+        return AnimalFactory.createAnimal(
+                ANIMAL_SPECIES[random.nextInt(ANIMAL_SPECIES.length)],
+                ANIMAL_EYE_COLORS[random.nextInt(ANIMAL_EYE_COLORS.length)],
+                random.nextBoolean()
+        );
     }
 
     // Генерация случайной бочки
     public Barrel createRandomBarrel() {
-        return new Barrel.BarrelBuilder()
-                .setVolume(random.nextInt(200) + 1) // Объем от 1 до 200 литров
-                .setStoredMaterial(BARREL_STORED_MATERIALS[random.nextInt(BARREL_STORED_MATERIALS.length)])
-                .setMaterial(BARREL_MATERIALS[random.nextInt(BARREL_MATERIALS.length)])
-                .build();
+        return BarrelFactory.createBarrel(
+                random.nextInt(200) + 1,// Объем от 1 до 200 литров
+                BARREL_STORED_MATERIALS[random.nextInt(BARREL_STORED_MATERIALS.length)],
+                BARREL_MATERIALS[random.nextInt(BARREL_MATERIALS.length)]
+        );
     }
 
     // Генерация случайного человека
     public Human createRandomHuman() {
-        return new Human.HumanBuilder()
-                .setGender(HUMAN_GENDER[random.nextInt(HUMAN_GENDER.length)])
-                .setAge(random.nextInt(80) + 1) // Возраст от 1 до 80 лет
-                .setSurname(HUMAN_SURNAMES[random.nextInt(HUMAN_SURNAMES.length)])
-                .build();
+        return  HumanFactory.createHuman(
+                HUMAN_GENDER[random.nextInt(HUMAN_GENDER.length)],
+                random.nextInt(80) + 1,
+                HUMAN_SURNAMES[random.nextInt(HUMAN_SURNAMES.length)]
+        );
     }
 
     @Override

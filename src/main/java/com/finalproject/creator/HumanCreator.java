@@ -1,4 +1,5 @@
 package com.finalproject.creator;
+import com.finalproject.factories.HumanFactory;
 import com.finalproject.model.Human;
 import com.finalproject.service.Input;
 import com.finalproject.tracker.ObjectTracker;
@@ -22,11 +23,7 @@ public class HumanCreator implements ObjectCreator<Human> {
         System.out.println("Введите его фамилию:");
         String surname = input.getValidStringInput();
 
-        Human human = new Human.HumanBuilder()
-                .setGender(gender)
-                .setAge(age)
-                .setSurname(surname)
-                .build();
+        Human human = HumanFactory.createHuman(gender, age, surname);
         if (input.getMode().equals("createNew")) {
             ObjectTracker.addHuman(human);  // Track
             System.out.println("Человек добавлен: " + human);
@@ -40,23 +37,21 @@ public class HumanCreator implements ObjectCreator<Human> {
         int age = -1;
         try {
             age = Integer.parseInt(parts[2]);
+            String surname = parts[3];
+            if (gender.matches("[a-zA-Zа-яА-ЯёЁ ]+") && surname.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
+                Human human = HumanFactory.createHuman(gender, age, surname);
+                ObjectTracker.addHuman(human);  // Track
+            }
+            else{
+                System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
+                        "Объект Человек: Гендера " + gender + " с Фамилией " + surname + " не добавлен!");
+            }
+
         } catch (NumberFormatException e) {
-            System.out.println("Человек возраста: " + age + " не добовлен.\n" +
+            System.out.println("Человек возраста: " + parts[2] + " не добавлен.\n" +
                     "Указаный возраст не целочисленное число!\n");
         }
-        String surname = parts[3];
-        if (gender.matches("[a-zA-Zа-яА-ЯёЁ ]+") && surname.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
-            Human human = new Human.HumanBuilder()
-                    .setGender(gender)
-                    .setAge(age)
-                    .setSurname(surname)
-                    .build();
-            ObjectTracker.addHuman(human);  // Track
-        }
-        else{
-            System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
-                    "Объект Человек: Гендера " + gender + " с Фамилией " + surname + " не добавлен!");
-        }
+
 
     }
     public Human createRandomObject(){

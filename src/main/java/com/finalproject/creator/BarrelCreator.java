@@ -1,4 +1,5 @@
 package com.finalproject.creator;
+import com.finalproject.factories.BarrelFactory;
 import com.finalproject.model.Animal;
 import com.finalproject.model.Barrel;
 import com.finalproject.service.Input;
@@ -25,14 +26,10 @@ public class BarrelCreator implements ObjectCreator<Barrel> {
         System.out.println("Введите материал бочки:");
         String material = input.getValidStringInput();
 
-        Barrel barrel = new Barrel.BarrelBuilder()
-                .setVolume(volume)
-                .setStoredMaterial(storedMaterial)
-                .setMaterial(material)
-                .build();
+        Barrel barrel = BarrelFactory.createBarrel(volume, storedMaterial, material);
         if (input.getMode().equals("createNew")){
             ObjectTracker.addBarrel(barrel);  // Track
-        System.out.println("Бочка добавлена: " + barrel);
+            System.out.println("Бочка добавлена: " + barrel);
         }
         return barrel;
     }
@@ -42,24 +39,22 @@ public class BarrelCreator implements ObjectCreator<Barrel> {
         int volume = -1;
         try {
             volume = Integer.parseInt(parts[1]);
+            String storedMaterial = parts[2];
+            String material = parts[3];
+            if (storedMaterial.matches("[a-zA-Zа-яА-ЯёЁ ]+") && material.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
+                Barrel barrel = BarrelFactory.createBarrel(volume, storedMaterial, material);
+                ObjectTracker.addBarrel(barrel);  // Track
+            }
+            else{
+                System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
+                        "Объект Бочка: Материала " + material + " Наполненная материалом " + storedMaterial + " не добавлен!");
+            }
         } catch (NumberFormatException e) {
-            System.out.println("Бочка с объемом: " + volume + "не добавлена.\n" +
+            System.out.println("Бочка с объемом: " + parts[1] + " не добавлена.\n" +
                     "Указанный объем не целочисленное число!\n");
         }
-        String storedMaterial = parts[2];
-        String material = parts[3];
-        if (storedMaterial.matches("[a-zA-Zа-яА-ЯёЁ ]+") && material.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
-            Barrel barrel = new Barrel.BarrelBuilder()
-                    .setVolume(volume)
-                    .setStoredMaterial(storedMaterial)
-                    .setMaterial(material)
-                    .build();
-            ObjectTracker.addBarrel(barrel);  // Track
-        }
-        else{
-            System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
-                    "Объект Бочка: Материала " + material + " Наполненная материалом " + storedMaterial + " не добавлен!");
-        }
+
+
     }
     public Barrel createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();
