@@ -41,7 +41,8 @@ public class HumanCreator implements ObjectCreator<Human> {
         try {
             age = Integer.parseInt(parts[2]);
         } catch (NumberFormatException e) {
-            System.out.println("Человек возраста: " + age + " не добовлен.\n Указаный возраст не целочисленное число!");
+            System.out.println("Человек возраста: " + age + " не добовлен.\n" +
+                    "Указаный возраст не целочисленное число!\n");
         }
         String surname = parts[3];
         if (gender.matches("[a-zA-Zа-яА-ЯёЁ ]+") && surname.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
@@ -52,9 +53,11 @@ public class HumanCreator implements ObjectCreator<Human> {
                     .build();
             ObjectTracker.addHuman(human);  // Track
         }
-        else{}
-        System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
-                "Объект Человек: гендера " + gender + " с Фамилией " + surname + " не добавлен!");
+        else{
+            System.out.println("Введена строка с числами. Введите строку без чисел!\n" +
+                    "Объект Человек: Гендера " + gender + " с Фамилией " + surname + " не добавлен!");
+        }
+
     }
     public Human createRandomObject(){
         RandomObjectCreator creator = new RandomObjectCreator();

@@ -43,7 +43,8 @@ public class BarrelCreator implements ObjectCreator<Barrel> {
         try {
             volume = Integer.parseInt(parts[1]);
         } catch (NumberFormatException e) {
-            System.out.println("Бочка с объемом: " + volume + "не добавлена.\n Указанный объем не целочисленное число!");
+            System.out.println("Бочка с объемом: " + volume + "не добавлена.\n" +
+                    "Указанный объем не целочисленное число!\n");
         }
         String storedMaterial = parts[2];
         String material = parts[3];

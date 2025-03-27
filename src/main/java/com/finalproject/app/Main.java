@@ -108,17 +108,15 @@ public class Main {
     }
 
     private static void createObjectsFromFile() throws IOException {
-        System.out.println("Введите полный путь к файлу. Наполнение файла должно иметь следующий вид: \n" +
-                "Имя объекта Поле1 Поле2 Поле3.\n" +
+        System.out.println("Введите полный путь к файлу. Наполнение файла должно иметь следующий вид: \n\n" +
+                "Имя объекта Поле1 Поле2 Поле3.\n\n" +
                 "Последовательность полей для классов: \n" +
                 "Животное Вид Цвет глаз Шерсть \n" +
                 "Бочка Объем Хранимый материал Материал изготовления \n" +
                 "Человек Пол Возраст Фамилия");
-        String filePath = input.getValidStringInput();
-
-        try (Stream<String> linesStream = Files.lines(Paths.get(filePath))) {
-            String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
-
+        String filePath = input.getValidFileInput();
+        Stream<String> linesStream = Files.lines(Paths.get(filePath));
+        String[] linesArray = linesStream.toArray(String[]::new); // Лист строк данных классов и его полей для дальнейшего ввода
             for (String line : linesArray) {
                 String className = line.trim().toLowerCase().split("\\s+")[0];
                 switch (className) {
@@ -133,13 +131,7 @@ public class Main {
                         break;
                 }
             }
-        } catch (InvalidPathException e) {
-            // Обработка неправильного пути
-            System.err.println("Ошибка: Неправильный путь к файлу: " + filePath);
-        } catch (IOException e) {
-            // Обработка ошибок ввода-вывода
-            System.err.println("Ошибка при чтении файла: " + e.getMessage());
-        }
+            System.out.println("Объекты из файла созданы!");
     }
 
     private static void createRandomObjects() throws IOException{

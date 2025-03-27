@@ -45,11 +45,12 @@ public class AnimalCreator implements ObjectCreator<Animal> {
                 hasFur = true;
             }
             else {
-                throw new IllegalArgumentException("Животное с данными о наличии шерсти: " + hasFur + "не добавлено.\n Укажите логическую переменную для данного поля!");
+                throw new IllegalArgumentException("Животное с данными о наличии шерсти: " + hasFur + " не добавлено.\n" +
+                        "Укажите логическую переменную для данного поля!\n");
             }
         }
         catch (IllegalArgumentException e) {
-            System.out.println("Error parsing bool for animal: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         if (species.matches("[a-zA-Zа-яА-ЯёЁ ]+") && eyeColor.matches("[a-zA-Zа-яА-ЯёЁ ]+")) {
 
