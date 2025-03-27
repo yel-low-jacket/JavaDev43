@@ -1,4 +1,5 @@
 package com.finalproject.app;
+import com.finalproject.outputs.Output;
 import com.finalproject.tracker.ObjectTracker;
 import com.finalproject.creator.ObjectCreator;
 import com.finalproject.creator.AnimalCreator;
@@ -15,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
-import java.nio.file.InvalidPathException;
 import java.util.Comparator;
 
 public class Main {
@@ -60,14 +60,14 @@ public class Main {
                         createRandomObjects();
                         break;
                     case 4:
-                        outputAllArrays();
+                        Output.outputAllArrays();
                         break;
                     case 5:
                         input.setMode("find");
                         Search();
                         break;
                     case 6:
-                        outputAllArraysWithAdditionalSort();
+                        Output.outputAllArraysWithAdditionalSort();
                         break;
                     case 7:
                         System.out.println("Пока-пока...");
@@ -193,22 +193,5 @@ public class Main {
             default -> System.out.println("Некорректный ввод! Введите число от 1 до 3");
         }
     }
-
-    private static void outputAllArrays() {
-        System.out.println("Животные:");
-        System.out.println(ObjectTracker.getCreatedAnimals());
-        System.out.println("Человеки:");
-        System.out.println(ObjectTracker.getCreatedHumans());
-        System.out.println("Бочки:");
-        System.out.println(ObjectTracker.getCreatedBarrels());
-    }
-
-    private static void outputAllArraysWithAdditionalSort() {
-        System.out.println("Животные:");
-        ObjectTracker.getCreatedAnimalWithSort();
-        System.out.println("Человеки:");
-        System.out.println(ObjectTracker.getCreatedHumanWithSort());
-        System.out.println("Бочки:");
-        System.out.println(ObjectTracker.getCreatedBarrelWithSort());
-    }
 }
+
