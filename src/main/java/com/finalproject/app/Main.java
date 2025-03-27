@@ -106,10 +106,10 @@ public class Main {
 
     private static void createObjectsFromFile() throws IOException {
         System.out.println("Введите полный путь к файлу. Наполнение файла должно иметь следующий вид: \n\n" +
-                "Имя объекта Поле1 Поле2 Поле3.\n\n" +
+                "ИмяОбъекта Поле1 Поле2 Поле3.\n\n" +
                 "Последовательность полей для классов: \n" +
-                "Животное Вид Цвет глаз Шерсть \n" +
-                "Бочка Объем Хранимый материал Материал изготовления \n" +
+                "Животное Вид ЦветГлаз Шерсть \n" +
+                "Бочка Объем ХранимыйМатериал МатериалИзготовления \n" +
                 "Человек Пол Возраст Фамилия");
         String filePath = input.getValidFileInput();
         Stream<String> linesStream = Files.lines(Paths.get(filePath));
